@@ -18,10 +18,11 @@ import java.util.List;
 public class CreateEmployeeServlet extends HttpServlet {
     private EmployeeManager employeeManager = new EmployeeManager();
     private CompanyManager companyManager = new CompanyManager();
-    List<Company> companies = companyManager.getAll();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<Company> companies = companyManager.getAll();
         req.setAttribute("companyList", companies);
         req.getRequestDispatcher("WEB-INF/createEmployee.jsp").forward(req, resp);
     }
@@ -31,13 +32,14 @@ public class CreateEmployeeServlet extends HttpServlet {
         String name = req.getParameter("name");
         String surname = req.getParameter("surname");
         String email = req.getParameter("email");
-        String company= req.getParameter("company");
+        int companyId = Integer.parseInt(req.getParameter("companyId"));
 
-        Employee employee = new Employee();
-        employee.setName(name);
-        employee.setSurname(surname);
-        employee.setEmail(email);
-        employee.setCompany(companyManager.getByName(company));
+        Employee employee = Employee.builder()
+                .name(name)
+                .surname(surname)
+                .email(email)
+                .company(companyManager.getById(companyId))
+                .build();
         employeeManager.save(employee);
         resp.sendRedirect("/employees");
 

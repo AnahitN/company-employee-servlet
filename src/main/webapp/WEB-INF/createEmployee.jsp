@@ -15,10 +15,11 @@
   name: <input type="text" name="name"> <br><br>
   surname: <input type="text" name="surname"><br><br>
   email:<input type="text" name="email"><br><br>
-  <select name="company">
+  company:
+  <select name="companyId">
     <%
       for (Company company: companies) {%>
-        <option value="<%=company.getName()%>"> <%=company.getName()%></option>
+        <option value="<%=company.getId()%>"> <%=company.getName()%></option>
 <%}%>
   </select> <br><br>
   <input type="submit" value="create">

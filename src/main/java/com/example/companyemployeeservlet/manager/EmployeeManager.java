@@ -16,7 +16,7 @@ public class EmployeeManager {
     private CompanyManager companyManager = new CompanyManager();
 
     public void save(Employee employee) {
-        String sql = "INSERT INTO employee(name,surname,email,company_id) VALUES('%s','%s','%s',%d)";
+        String sql = "INSERT INTO employee(name,surname,email,company_id) VALUES(?,?,?,?)";
         try (PreparedStatement ps = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1,employee.getName());
             ps.setString(2,employee.getSurname());
